@@ -1,11 +1,14 @@
 package study.spring.chatserver.member.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.spring.chatserver.member.domain.Member;
+import study.spring.chatserver.member.dto.MemberListResDto;
 import study.spring.chatserver.member.dto.MemberLoginReqDto;
 import study.spring.chatserver.member.dto.MemberSaveReqDto;
 import study.spring.chatserver.member.repository.MemberRepository;
@@ -40,6 +43,21 @@ public class MemberService {
     }
 
     return member;
+  }
+
+  @Transactional(readOnly = true)
+  public List<MemberListResDto> findAll() {
+    List<Member> members = memberRepository.findAll();
+    List<MemberListResDto> memberListResDtos = new ArrayList<>();
+    for (Member member : members) {
+      MemberListResDto memberListResDto = new MemberListResDto();
+      memberListResDto.setId(member.getId());
+      memberListResDto.setEmail(member.getEmail());
+      memberListResDto.setName(member.getName());
+      memberListResDtos.add(memberListResDto);
+    }
+
+    return memberListResDtos;
   }
 
 }
