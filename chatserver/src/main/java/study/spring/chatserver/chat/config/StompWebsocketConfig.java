@@ -32,6 +32,7 @@ public class StompWebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
     // topic/1 형태로 메시지를 수힌해야 한다.
     registry.enableSimpleBroker("/topic");
+    // 내장 브로커를 사용하지 않으려면 'registry.enableStompBrokerRelay()' 를 사용한다.
   }
 
   // 웹소켓 요청(connect, subscribe, disconnect) 등의 요청시에는 http header 등 http 메시지를 넣을 수 있고,
